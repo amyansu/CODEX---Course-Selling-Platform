@@ -18,4 +18,12 @@ export const coursesTable = pgTable("courses", {
   price: integer("price").notNull(),
   originalPrice: integer("original_price").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
+  createdBy: uuid("created_by").notNull().references(() => usersTable.id),
 });
+
+export const enrollmentsTable = pgTable("enrollments", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  userId: uuid("user_id").notNull().references(() => usersTable.id),
+  courseId: integer("course_id").notNull().references(() => coursesTable.id),
+  enrolledAt: timestamp("enrolled_at").defaultNow().notNull(),
+})
