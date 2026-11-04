@@ -15,10 +15,12 @@ export const signup = async (req: Request, res: Response) => {
             });
         }
 
+        const normalizedEmail = email.toLowerCase();
+
         const [existingUser] = await db
             .select()
             .from(usersTable)
-            .where(eq(usersTable.email, email))
+            .where(eq(usersTable.email, normalizedEmail))
             .limit(1);
 
         if (existingUser) {
@@ -33,7 +35,7 @@ export const signup = async (req: Request, res: Response) => {
             .insert(usersTable)
             .values({
                 name,
-                email,
+                email: normalizedEmail,
                 password: hashedPassword
             })
             .returning({
@@ -75,10 +77,12 @@ export const signin = async (req: Request, res: Response) => {
             });
         }
 
+        const normalizedEmail = email.toLowerCase();
+
         const [user] = await db
             .select()
             .from(usersTable)
-            .where(eq(usersTable.email, email))
+            .where(eq(usersTable.email, normalizedEmail))
             .limit(1);
 
         if (!user) {
