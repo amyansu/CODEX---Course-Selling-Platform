@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -15,6 +15,50 @@ import { useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+      setError("");
+
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/signin`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || "Signin failed");
+        return;
+      }
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      navigate("/");
+    } catch (error) {
+      console.error("Signin error:", error);
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black">
       <Appbar />
@@ -41,7 +85,7 @@ function Login() {
             </div>
           </CardHeader>
           <CardContent>
-            <form>
+            <form onSubmit={handleSignin}>
               <div className="flex flex-col gap-6">
                 <div className="grid gap-2">
                   <Label htmlFor="email">Email</Label>
@@ -49,8 +93,10 @@ function Login() {
                     id="email"
                     type="email"
                     placeholder="m@example.com"
-                    required
                     className="h-11"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
                   />
                 </div>
                 <div className="grid gap-2">
@@ -66,30 +112,38 @@ function Login() {
                   <Input
                     id="password"
                     type="password"
+                    placeholder="Enter your password"
+                    className="h-11 text-base"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="h-11"
                   />
                 </div>
               </div>
-            </form>
-            <div className="pt-6 ">
-              <Button
-                type="submit"
-                className="w-full bg-blue-600 rounded-lg py-5 hover:bg-blue-700 cursor-pointer"
-              >
-                Sign in
-              </Button>
-              <span className="flex justify-center gap-1 pt-2">
-                No account?
-                <a
-                  href=""
-                  className="text-blue-700 hover:underline"
-                  onClick={() => navigate("/signup")}
+              {error && <p className="text-sm text-red-500">{error}</p>}
+              <div className="pt-6">
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-blue-600 rounded-lg py-5 hover:bg-blue-700 cursor-pointer"
                 >
-                  Signup
-                </a>
-              </span>
-            </div>
+                  {loading ? "Logging in..." : "Continue"}
+                </Button>
+              </div>
+            </form>
+            <span className="flex justify-center gap-1 pt-2">
+              No account?
+              <a
+                href="/signup"
+                className="text-blue-700 hover:underline"
+                onClick={(event) => {
+                  event.preventDefault();
+                  navigate("/signup");
+                }}
+              >
+                Signup
+              </a>
+            </span>
           </CardContent>
         </Card>
       </div>
