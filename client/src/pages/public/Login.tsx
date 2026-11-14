@@ -50,7 +50,11 @@ function Login() {
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      navigate("/");
+      if (data.user.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       console.error("Signin error:", error);
       setError("Something went wrong. Please try again.");

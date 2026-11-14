@@ -33,11 +33,11 @@ export default function Appbar() {
     localStorage.removeItem("userName");
     localStorage.removeItem("username");
 
-    navigate("/login");
+    navigate("/");
   };
 
   return (
-    <div>
+    <div className="sticky top-0 z-50">
       <div className="flex h-16 px-2 py-2 bg-gray-900 text-white items-center gap-2">
         {/* Logo */}
         <div className="ml-3">
