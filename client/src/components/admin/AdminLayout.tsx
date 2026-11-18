@@ -5,7 +5,7 @@ import {
   BookOpen,
   ChevronDown,
   GraduationCap,
-  // LayoutDashboard,
+  LayoutDashboard,
   Menu,
   Plus,
   Settings,
@@ -14,9 +14,9 @@ import {
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 
 const navigation = [
+  { label: "Dashboard", to: "/admin", icon: LayoutDashboard, end: true },
   { label: "Manage courses", to: "/admin/courses", icon: BookOpen, end: true },
   { label: "Add course", to: "/admin/courses/new", icon: Plus },
-  // { label: "Dashboard", to: "/admin", icon: LayoutDashboard, end: true },
 ];
 
 const utilityLinks = [

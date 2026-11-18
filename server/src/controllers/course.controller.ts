@@ -1,8 +1,8 @@
 import type { Request, Response } from "express";
 import type { AuthRequest } from "../middleware/auth.middleware.js";
 import { db } from "../db/index.ts";
-import { coursesTable } from "../db/schema.ts";
-import { eq } from "drizzle-orm";
+import { coursesTable, enrollmentsTable, usersTable } from "../db/schema.ts";
+import { desc, eq, gte, sql } from "drizzle-orm";
 
 export const getCourses = async (req: Request, res: Response) => {
     try {
@@ -153,6 +153,95 @@ export const getAdminCourses = async (
 
         return res.status(500).json({
             message: "Failed to fetch admin courses"
+        });
+    }
+};
+
+export const getAdminOverview = async (
+    req: AuthRequest,
+    res: Response
+) => {
+    try {
+        const today = new Date();
+        today.setUTCHours(0, 0, 0, 0);
+        const activityStart = new Date(today);
+        activityStart.setUTCDate(activityStart.getUTCDate() - 6);
+        const enrollmentDay = sql`date_trunc('day', ${enrollmentsTable.enrolledAt})`;
+
+        const [
+            courseCount,
+            userCount,
+            enrollmentCount,
+            revenue,
+            activity,
+            recentEnrollments
+        ] = await Promise.all([
+            db
+                .select({ count: sql<number>`count(*)::int` })
+                .from(coursesTable),
+            db
+                .select({ count: sql<number>`count(*)::int` })
+                .from(usersTable),
+            db
+                .select({ count: sql<number>`count(*)::int` })
+                .from(enrollmentsTable),
+            db
+                .select({
+                    amount: sql<number>`coalesce(sum(${coursesTable.price}), 0)::int`
+                })
+                .from(enrollmentsTable)
+                .innerJoin(
+                    coursesTable,
+                    eq(enrollmentsTable.courseId, coursesTable.id)
+                ),
+            db
+                .select({
+                    day: sql<string>`to_char(${enrollmentDay}, 'YYYY-MM-DD')`,
+                    count: sql<number>`count(*)::int`
+                })
+                .from(enrollmentsTable)
+                .where(gte(enrollmentsTable.enrolledAt, activityStart))
+                .groupBy(enrollmentDay)
+                .orderBy(enrollmentDay),
+            db
+                .select({
+                    id: enrollmentsTable.id,
+                    userName: usersTable.name,
+                    courseTitle: coursesTable.title,
+                    enrolledAt: enrollmentsTable.enrolledAt
+                })
+                .from(enrollmentsTable)
+                .innerJoin(usersTable, eq(enrollmentsTable.userId, usersTable.id))
+                .innerJoin(coursesTable, eq(enrollmentsTable.courseId, coursesTable.id))
+                .orderBy(desc(enrollmentsTable.enrolledAt))
+                .limit(5)
+        ]);
+
+        const countsByDay = new Map(
+            activity.map(({ day, count }) => [day, Number(count)])
+        );
+        const dailyEnrollments = Array.from({ length: 7 }, (_, index) => {
+            const date = new Date(today);
+            date.setUTCDate(date.getUTCDate() - (6 - index));
+            const day = date.toISOString().slice(0, 10);
+            return { day, count: countsByDay.get(day) ?? 0 };
+        });
+
+        return res.status(200).json({
+            totalCourses: Number(courseCount[0]?.count ?? 0),
+            totalUsers: Number(userCount[0]?.count ?? 0),
+            totalEnrollments: Number(enrollmentCount[0]?.count ?? 0),
+            estimatedRevenue: Number(revenue[0]?.amount ?? 0),
+            dailyEnrollments,
+            recentEnrollments: recentEnrollments.map(enrollment => ({
+                ...enrollment,
+                enrolledAt: enrollment.enrolledAt.toISOString()
+            }))
+        });
+    } catch (error) {
+        console.error("Admin overview fetch error:", error);
+        return res.status(500).json({
+            message: "Failed to fetch admin dashboard overview"
         });
     }
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import AdminRoute from "./components/auth/AdminRoute";
@@ -16,7 +16,7 @@ import MyCourse from "./pages/user/MyCourse";
 import Profile from "./pages/user/Profile";
 
 import AdminLayout from "./components/admin/AdminLayout";
-// import AdminDashboard from "./pages/admin/Dashboard";
+import AdminDashboard from "./pages/admin/Dashboard";
 import ManageCourses from "./pages/admin/ManageCourses";
 import EditCourse from "./pages/admin/EditCourse";
 import AddCourse from "./pages/admin/CreateCourse";
@@ -46,7 +46,7 @@ function App() {
         {/* Protected Admin Routes */}
         <Route element={<AdminRoute />}>
           <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<Navigate to="courses" replace />}  />
+            <Route index element={<AdminDashboard />}  />
             <Route path="courses" element={<ManageCourses />} />
             <Route path="courses/new" element={<AddCourse />} />
             <Route path="courses/:id/edit" element={<EditCourse />} />
