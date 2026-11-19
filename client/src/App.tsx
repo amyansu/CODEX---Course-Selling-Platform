@@ -13,7 +13,6 @@ import CourseDetails from "./pages/public/CourseDetails";
 
 import Purchases from "./pages/user/Purchases";
 import MyCourse from "./pages/user/MyCourse";
-import Profile from "./pages/user/Profile";
 
 import AdminLayout from "./components/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/Dashboard";
@@ -40,7 +39,6 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/my-courses" element={<Purchases />} />
           <Route path="/my-courses/:id" element={<MyCourse />} />
-          <Route path="/profile" element={<Profile />} />
         </Route>
 
         {/* Protected Admin Routes */}
