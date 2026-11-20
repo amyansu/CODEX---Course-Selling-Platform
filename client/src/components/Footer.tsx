@@ -6,12 +6,12 @@ import { FaInstagram, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
 function Footer() {
   return (
     <div className="bg-black">
-      <div className="text-white flex flex-col items-center pt-20">
+      <div className="text-white flex flex-col items-center px-4 pt-14 sm:pt-20">
         <p className="text-blue-500 font-semibold text-lg">STUDENT SUPPORT</p>
-        <h1 className="text-6xl font-bold mt-4">
+        <h1 className="text-4xl text-center font-bold mt-4 sm:text-6xl">
           Need <span className="text-blue-700">help?</span>
         </h1>
-        <p className="text-gray-400 text-xl text-center max-w-3xl mt-6">
+        <p className="text-gray-400 text-base text-center max-w-3xl mt-6 sm:text-xl">
           Have a question or need assistance? Email us at
           <span className="text-blue-700"> gethelp.codex@gmail.com</span>, and
           our support team will get back to you within
@@ -24,7 +24,7 @@ function Footer() {
       </div>
       <div>
         <div className="bg-gray-950 rounded-3xl border border-gray-800 mt-20 m-6">
-          <div className="grid grid-cols-4 gap-10 p-10">
+          <div className="grid grid-cols-1 gap-8 p-6 sm:grid-cols-2 sm:p-8 lg:grid-cols-4 lg:gap-10 lg:p-10">
             <div>
               <div className="flex items-center gap-3">
                 <img
@@ -70,7 +70,7 @@ function Footer() {
             </div>
 
             <div>
-              <div className="flex gap-4">
+              <div className="flex flex-wrap gap-4">
                 <p className="flex h-10 w-10 bg-white items-center justify-center rounded-sm border border-gray-800">
                   <FaYoutube size={20} />
                 </p>

@@ -44,14 +44,14 @@ function Courses() {
   return (
     <div className="min-h-screen bg-black">
       <Appbar />
-      <div className="m-6 text-white">
+      <div className="mx-auto max-w-7xl px-4 py-6 text-white sm:px-6 sm:py-8">
         <h1 className="text-3xl font-bold mt-8">Courses</h1>
         {loading ? (
           <p className="pt-6">Loading courses...</p>
         ) : error ? (
           <p className="pt-6">{error}</p>
         ) : (
-          <div className="grid grid-cols-4 gap-4 pt-6">
+          <div className="grid grid-cols-1 gap-4 pt-6 sm:grid-cols-2 lg:grid-cols-4">
             {courses.map((course) => (
               <CourseCard key={course.id} course={course} />
             ))}

@@ -66,8 +66,8 @@ function Login() {
   return (
     <div className="min-h-screen bg-black">
       <Appbar />
-      <div className="flex justify-center items-center pt-20">
-        <Card className="w-[35%] bg-gray-900 text-white p-4 rounded-md">
+      <div className="flex justify-center items-center px-4 py-12 sm:pt-20">
+        <Card className="w-full max-w-lg bg-gray-900 text-white p-4 rounded-md">
           <CardHeader>
             <div className="flex flex-col gap-4">
               <div>

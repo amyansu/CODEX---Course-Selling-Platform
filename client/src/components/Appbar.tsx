@@ -38,9 +38,9 @@ export default function Appbar() {
 
   return (
     <div className="sticky top-0 z-50">
-      <div className="flex h-16 px-2 py-2 bg-gray-900 text-white items-center gap-2">
+      <div className="flex min-h-16 px-3 py-2 bg-gray-900 text-white items-center gap-2 sm:px-4">
         {/* Logo */}
-        <div className="ml-3">
+        <div className="ml-0 sm:ml-3">
           <Link to="/" className="flex items-center gap-2 cursor-pointer">
             <img
               className="rounded-full w-10 h-10"
@@ -48,14 +48,14 @@ export default function Appbar() {
               alt="CODEX Logo"
             />
 
-            <p className="font-extrabold text-2xl">
+            <p className="font-extrabold text-xl sm:text-2xl">
               CODE<span className="text-red-500">X</span>
             </p>
           </Link>
         </div>
 
         {/* Navigation */}
-        <div className="flex justify-end items-center ml-auto gap-2 mr-4">
+        <div className="flex min-w-0 justify-end items-center ml-auto gap-2 mr-0 sm:mr-2">
           {userName ? (
             <>
               {/* User Profile */}
@@ -71,13 +71,13 @@ export default function Appbar() {
                   </svg>
                 </div>
 
-                <span className="font-medium">{userName}</span>
+                <span className="hidden max-w-32 truncate font-medium sm:inline">{userName}</span>
               </div>
 
               {/* Logout */}
               <Button
                 onClick={handleLogout}
-                className="bg-white h-9 text-black px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 rounded-lg"
+                className="bg-white h-9 text-black px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 rounded-lg sm:px-4"
               >
                 Logout
               </Button>
@@ -87,7 +87,7 @@ export default function Appbar() {
               {/* Login */}
               <Button
                 onClick={() => navigate("/login")}
-                className="bg-white h-9 text-black px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 rounded-lg"
+                className="bg-white h-9 text-black px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 rounded-lg sm:px-4"
               >
                 Login
               </Button>
@@ -95,7 +95,7 @@ export default function Appbar() {
               {/* Signup */}
               <Button
                 onClick={() => navigate("/signup")}
-                className="bg-white h-9 text-black px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 rounded-lg"
+                className="bg-white h-9 text-black px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 rounded-lg sm:px-4"
               >
                 Join now
               </Button>

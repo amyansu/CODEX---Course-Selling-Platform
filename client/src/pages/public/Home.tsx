@@ -47,33 +47,33 @@ function Home() {
   return (
     <div className="min-h-screen bg-black">
       <Appbar />
-      <div className="flex flex-col items-center p-2">
-        <div className="flex justify-center mt-20">
-          <p className="text-5xl font-bold text-white">
+      <div className="flex flex-col items-center px-4 py-2 sm:px-6">
+        <div className="mt-14 flex justify-center text-center sm:mt-20">
+          <p className="text-4xl font-bold text-white sm:text-5xl">
             CODE<span className="text-red-500">X</span> by 100xDevs
           </p>
         </div>
-        <div className="mt-6">
+        <div className="mt-6 max-w-2xl text-center">
           <p className="text-gray-400">
             Practical coding cohorts and bootcamps in web development, DevOps,
             Web3, AI and machine learning.
           </p>
         </div>
-        <div className="mt-12 flex justify-between items-center gap-2">
+        <div className="mt-10 flex justify-center w-full max-w-xl flex-col items-center gap-3 sm:mt-12 sm:flex-row">
           <Button
-            className={`p-6 w-40 bg-white text-black hover:bg-gray-200 cursor-pointer ${isLoggedIn ? "rounded-full" : ""}`}
+            className={`w-full p-6 bg-white text-black hover:bg-gray-200 cursor-pointer sm:w-40 ${isLoggedIn ? "rounded-full" : ""}`}
             onClick={() => navigate(isLoggedIn ? "/my-courses" : "/courses")}
           >
             {isLoggedIn ? "Go to Purchases" : "Explore Courses"}
           </Button>
           <Button
-            className={`p-6 w-40 text-black bg-white hover:bg-gray-200 cursor-pointer ${isLoggedIn ? "rounded-full" : ""}`}
+            className={`w-full p-6 text-black bg-white hover:bg-gray-200 cursor-pointer sm:w-40 ${isLoggedIn ? "rounded-full" : ""}`}
             onClick={() => navigate(isLoggedIn ? "/courses" : "/signup")}
           >
             {isLoggedIn ? "Browse Courses" : "Get Started"}
           </Button>
         </div>
-        <div className="mt-8 flex justify-around gap-8">
+        <div className="mt-8 flex max-w-5xl flex-wrap justify-center gap-x-6 gap-y-3 text-center sm:gap-x-8">
           <a
             href="/courses"
             className="text-blue-500 cursor-pointer hover:underline"
@@ -111,19 +111,19 @@ function Home() {
             AI Bootcamp
           </a>
         </div>
-        <div className="grid grid-cols-3 gap-8 my-6 mx-18">
+        <div className="my-6 grid w-full max-w-6xl grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:gap-8">
           <a href="/course" className="w-full cursor-pointer rounded-lg">
-            <img src="/images.jpg" alt="" />
+            <img src="/images.jpg" alt="Featured learning" className="aspect-video w-full rounded-lg object-cover" />
           </a>
           <a href="/course" className="w-full cursor-pointer rounded-lg">
-            <img src="/images.jpg" alt="" />
+            <img src="/images.jpg" alt="Featured learning" className="aspect-video w-full rounded-lg object-cover" />
           </a>
           <a href="/course" className="w-full cursor-pointer rounded-lg">
-            <img src="/images.jpg" alt="" />
+            <img src="/images.jpg" alt="Featured learning" className="aspect-video w-full rounded-lg object-cover" />
           </a>
         </div>
-        <div className="w-280 rounded-xl bg-gray-900 text-white py-10 px-8 mt-8">
-          <h1 className="text-3xl mb-4 font-bold">
+        <div className="mt-8 w-full max-w-6xl rounded-xl bg-gray-900 px-6 py-8 text-white sm:px-8 sm:py-10">
+          <h1 className="mb-4 text-2xl font-bold sm:text-3xl">
             Learn by building with CODE<span className="text-red-500">X</span>
           </h1>
           <p className="mb-6">
@@ -139,11 +139,11 @@ function Home() {
             <ArrowRight />
           </Button>
         </div>
-        <div className="mt-10 w-full flex flex-col px-12 py-8">
-          <div className=" w-full flex justify-between">
-            <h1 className="text-2xl text-white font-bold">Featured Cohorts</h1>
+        <div className="mt-10 w-full max-w-6xl flex flex-col px-0 py-8">
+          <div className="flex w-full items-center justify-between gap-4">
+            <h1 className="text-xl text-white font-bold sm:text-2xl">Featured Cohorts</h1>
             <Button
-              className="bg-transparent hover:bg-transparent hover:underline cursor-pointer text-blue-500 text-sm flex items-center mr-20"
+              className="bg-transparent hover:bg-transparent hover:underline cursor-pointer text-blue-500 text-sm flex items-center"
               onClick={() => navigate("/courses")}
             >
               View all <ArrowRight className="h-4 w-8" />
@@ -162,7 +162,7 @@ function Home() {
               {error}
             </p>
           ) : (
-            <div className="grid grid-cols-4 gap-4 pt-6">
+            <div className="grid grid-cols-1 gap-4 pt-6 sm:grid-cols-2 lg:grid-cols-4">
               {courses.slice(0, 4).map((course) => (
                 <CourseCard key={course.id} course={course} />
               ))}

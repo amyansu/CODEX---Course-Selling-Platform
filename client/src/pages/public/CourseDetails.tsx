@@ -205,22 +205,22 @@ function CourseDetails() {
     <div className="bg-black min-h-screen">
       <Appbar />
 
-      <div className="flex justify-between items-start text-white m-8">
-        <div className="m-8 max-w-xl">
-          <h1 className="text-4xl font-bold text-amber-100 mt-4">
+      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-8 text-white sm:px-6 sm:py-10 lg:flex-row lg:items-start lg:justify-between">
+        <div className="max-w-2xl lg:pt-8">
+          <h1 className="mt-4 text-3xl font-bold text-amber-100 sm:text-4xl">
             {course.title}
           </h1>
 
-          <p className="mt-6 text-gray-300 text-lg">
+          <p className="mt-6 text-base leading-7 text-gray-300 sm:text-lg">
             {course.description}
           </p>
         </div>
 
-        <Card className="w-90 bg-gray-950 border border-gray-600 rounded-md h-full">
-          <img src={course.image} alt="image" className="w-full" />
+        <Card className="w-full shrink-0 bg-gray-950 border border-gray-600 rounded-md lg:max-w-md">
+          <img src={course.image} alt={course.title} className="aspect-video w-full object-cover" />
 
           <CardContent>
-            <div className="flex items-center gap-4 pt-12">
+            <div className="flex flex-wrap items-center gap-3 pt-8 sm:pt-12">
               <span className="text-white text-3xl font-extrabold">
                 ₹{course.price.toLocaleString("en-IN")}
               </span>
@@ -229,7 +229,7 @@ function CourseDetails() {
                 ₹{originalPrice.toLocaleString("en-IN")}
               </span>
 
-              <span className="text-green-500 text-sm font-semibold ml-4 p-1 border border-gray-800 rounded-full">
+              <span               className="text-green-500 text-sm font-semibold p-1 border border-gray-800 rounded-full">
                 {discountPercentage}% off
               </span>
             </div>
